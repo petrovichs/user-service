@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: nsi
+  datasource:
+    url: jdbc:h2:mem:davinci_h2_db_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    username: su
+    password: su
+  jpa:
+    hibernate:
+      ddl-auto: create
+#  cloud:
+#    kubernetes:
+#      discovery:
+#        all-namespaces: true
