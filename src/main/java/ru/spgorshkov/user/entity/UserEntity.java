@@ -17,8 +17,11 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
+
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "username")
     private String username;

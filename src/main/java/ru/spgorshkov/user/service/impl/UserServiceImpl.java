@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.spgorshkov.user.dao.UserRepository;
-import ru.spgorshkov.user.dto.UserDto;
+import ru.spgorshkov.user.dto.User;
 import ru.spgorshkov.user.entity.UserEntity;
 import ru.spgorshkov.user.mapper.UserMapper;
 import ru.spgorshkov.user.service.UserService;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -21,24 +20,31 @@ public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
 
     @Override
-    public List<UserDto> getAllUsers() {
-        return mapper.toDtoList(repository.findAll());
-    }
-
-    @Override
-    public UserDto getUserByUuid(UUID uuid) {
-        return mapper.toDto(repository.findByUuid(uuid));
-    }
-
-    @Override
-    public void deleteUserByUuid(UUID uuid) {
+    public void deleteUserById(Long uuid) {
         repository.deleteById(uuid);
     }
 
     @Override
-    public void updateUser(UserDto dto) {
-        if(dto.getUuid() == null) throw new IllegalArgumentException("UUID is blank or null");
-        UserEntity entity = repository.findByUuid(dto.getUuid());
+    public void addUser(User dto) {
+        repository.save(mapper.toEntity(dto));
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return mapper.toDtoList(repository.findAll());
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        UserEntity entity = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return mapper.toDto(entity);
+    }
+
+    @Override
+    public void updateUser(User dto) {
+        if(dto.getId() == null) throw new IllegalArgumentException("ID is blank or null");
+
+        UserEntity entity = repository.findById(dto.getId()).orElseThrow(()->new IllegalArgumentException("User not found"));
         entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
@@ -48,8 +54,4 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public void addUser(UserDto dto) {
-        repository.save(mapper.toEntity(dto));
-    }
 }

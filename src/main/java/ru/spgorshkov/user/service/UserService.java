@@ -1,18 +1,17 @@
 package ru.spgorshkov.user.service;
 
-import ru.spgorshkov.user.dto.UserDto;
+import ru.spgorshkov.user.dto.User;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface UserService {
-    List<UserDto> getAllUsers();
+    List<User> getAllUsers();
 
-    void addUser(UserDto dto);
+    void addUser(User dto);
 
-    UserDto getUserByUuid(UUID uuid);
+    User getUserById(Long id);
 
-    void deleteUserByUuid(UUID uuid);
+    void deleteUserById(Long id);
 
-    void updateUser(UserDto dto);
+    void updateUser(User dto);
 }

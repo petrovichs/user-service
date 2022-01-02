@@ -7,13 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.spgorshkov.user.dao.UserRepository;
-import ru.spgorshkov.user.dto.UserDto;
+import ru.spgorshkov.user.dto.User;
 import ru.spgorshkov.user.entity.UserEntity;
 import ru.spgorshkov.user.mapper.UserMapper;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
@@ -33,7 +32,7 @@ class UserServiceImplTest {
 
     UserEntity entity;
 
-    UserDto dto;
+    User dto;
 
     @BeforeEach
     void before() {
@@ -41,23 +40,18 @@ class UserServiceImplTest {
                 .username("Ivan")
                 .build();
 
-        dto = new UserDto();
+        dto = new User();
         dto.setUsername("Ivan");
-        dto.setUuid(UUID.randomUUID());
+        dto.setId(1L);
     }
 
     @Test
-    void getAllCountries() {
+    void getAllUser() {
         when(repository.findAll()).thenReturn(Collections.singleton(entity));
         when(mapper.toDtoList(any())).thenReturn(Collections.singletonList(dto));
-        List<UserDto> allCountries = userService.getAllUsers();
+        List<User> allCountries = userService.getAllUsers();
         assertEquals(1, allCountries.size());
     }
 
-    @Test
-    void getCountryByUuid() {
 
-
-
-    }
 }
