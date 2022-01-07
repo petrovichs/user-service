@@ -1,7 +1,6 @@
 create table if not exists users
 (
-    uuid       uuid primary key,
-    id         bigint,
+    id         serial primary key,
     username   varchar(256) not null,
     first_name varchar(256),
     last_name  varchar(256),

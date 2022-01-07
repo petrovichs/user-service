@@ -21,7 +21,7 @@ public class UserController implements UserApi {
     @Autowired
     UserService userService;
 
-    @GetMapping(value = {"/backend/person/users"}, produces = {"application/json"})
+    @GetMapping(value = {"/users"}, produces = {"application/json"})
     public ResponseEntity<List<User>> getAllUserByUuid() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
@@ -60,6 +60,8 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<Void> updateUser(Long userId, @Valid User user) {
-        return null;
+        log.debug("update user {}", userId);
+        userService.updateUser(userId, user);
+        return ResponseEntity.ok().build();
     }
 }

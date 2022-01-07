@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long uuid) {
-        repository.deleteById(uuid);
+        repository.deleteById(Math.toIntExact(uuid));
     }
 
     @Override
@@ -36,15 +36,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        UserEntity entity = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        UserEntity entity = repository.findById(Math.toIntExact(id)).orElseThrow(() -> new IllegalArgumentException("User not found"));
         return mapper.toDto(entity);
     }
 
     @Override
-    public void updateUser(User dto) {
+    public void updateUser(Long id, User dto) {
         if(dto.getId() == null) throw new IllegalArgumentException("ID is blank or null");
 
-        UserEntity entity = repository.findById(dto.getId()).orElseThrow(()->new IllegalArgumentException("User not found"));
+        UserEntity entity = repository.findById(Math.toIntExact(dto.getId())).orElseThrow(()->new IllegalArgumentException("User not found"));
         entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());

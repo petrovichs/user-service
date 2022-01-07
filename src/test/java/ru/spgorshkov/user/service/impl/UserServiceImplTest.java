@@ -39,7 +39,6 @@ class UserServiceImplTest {
         entity = UserEntity.builder()
                 .username("Ivan")
                 .build();
-
         dto = new User();
         dto.setUsername("Ivan");
         dto.setId(1L);
